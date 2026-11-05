@@ -53,61 +53,73 @@
         }
       }
     },
- "/analytics/sales-total": {
 
-      "get": {
-        "tags": [
-          "Indicadores SQL Server"
-        ],
-        "summary": "Obtener ventas totales",
-        "description": "Obtiene el total de ventas utilizando información transaccional almacenada en SQL Server.",
-        "responses": {
-          "200": {
-            "description": "Indicador generado correctamente",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "indicator": {
-                  "type": "string",
-                  "example": "sales_total"
-                },
-
-                "title": {
-                  "type": "string",
-                  "example": "Ventas Totales"
-                },
-
-
-                "chart_type": {
-                  "type": "string",
-                  "example": "card"
-                },
-
-                "data": {
-                  "type": "number",
-                  "example": 5052.00
-                },
-
-                "sources": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-
-                  "example": [
-                    "SQL Server"
-                  ]
-                }
-              }
+"/analytics/sales-total": {
+  "get": {
+    "tags": [
+      "Indicadores SQL Server"
+    ],
+    "summary": "Obtener ventas totales",
+    "description": "Calcula las ventas totales. Permite filtrar por año y mes. Si solo se envía el mes, consulta ese mes de todos los años.",
+    "parameters": [
+      {
+        "name": "year",
+        "in": "query",
+        "description": "Año de las ventas. Debe ser un número entero entre 1 y 9999.",
+        "required": false,
+        "type": "string"
+      },
+      {
+        "name": "month",
+        "in": "query",
+        "description": "Mes de las ventas. Debe ser un número entero entre 1 y 12.",
+        "required": false,
+        "type": "integer"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Indicador generado correctamente",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "indicator": {
+              "type": "string",
+              "example": "sales_total"
+            },
+            "title": {
+              "type": "string",
+              "example": "Ventas Totales"
+            },
+            "chart_type": {
+              "type": "string",
+              "example": "card"
+            },
+            "data": {
+              "type": "number",
+              "example": 5052.00
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": [
+                "SQL Server"
+              ]
             }
-          },
-
-          "500": {
-            "description": "Error interno del servidor"
           }
         }
+      },
+      "400": {
+        "description": "Parámetros inválidos"
+      },
+      "500": {
+        "description": "Error interno del servidor"
       }
-    },
+    }
+  }
+},
 
     "/analytics/sales-by-month": {
       "get": {
